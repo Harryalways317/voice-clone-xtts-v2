@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  title: Text-to-Speech API
+  version: 1.0.0
+  description: API for converting text to speech using Flask and TTS library.
+
+servers:
+  - url: http://localhost:5002
+
+paths:
+  /convert:
+    post:
+      summary: Convert Text to Speech
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to be converted to speech.
+                speaker:
+                  type: string
+                  description: The ID of the speaker.
+                speed:
+                  type: number
+                  description: The speech speed factor (1.0 is normal speed).
+                language:
+                  type: string
+                  description: The language code (e.g., "en" for English).
+      responses:
+        '200':
+          description: Successful response
+          content:
+            audio/wav:
+              schema:
+                type: string
+                format: binary
+
+  /speakers:
+    get:
+      summary: Get List of Speakers
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
